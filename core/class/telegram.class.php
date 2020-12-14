@@ -242,7 +242,7 @@ class telegramCmd extends cmd {
 			$data['disable_notification'] = 0;
 			$data['text'] = "Délai dépassé ou quelqu'un a répondu";
 			if ($_options['message'] != '') {
-				$data['text'] = $_options['message'];
+				$data['text'] = $this->formatMessage($_options['message']);
 			}
 			$data['reply_markup'] = json_encode(array(
 				'hide_keyboard' => true,
@@ -282,7 +282,7 @@ class telegramCmd extends cmd {
 		}
 
 		if (!isset($_options['files']) && $_options['message'] != '') {
-			$data['text'] = trim($_options['message']);
+			$data['text'] = $this->formatMessage( trim($_options['message']) );
 			$url = $request_http . "/sendMessage";
 			$this->sendTelegram($url, 'message', $to, $data);
 		}
@@ -292,7 +292,7 @@ class telegramCmd extends cmd {
 				if (trim($file) == '') {
 					continue;
 				}
-				$text = ($_options['message'] == '') ? pathinfo($file, PATHINFO_FILENAME) : $_options['message'];
+				$text = ($_options['message'] == '') ? pathinfo($file, PATHINFO_FILENAME) : $this->formatMessage($_options['message']);
 				$ext = pathinfo($file, PATHINFO_EXTENSION);
 				if ($ext == 'mp4') {
 					copy($file, substr($file, 0, -3) . 'mkv');
@@ -321,6 +321,21 @@ class telegramCmd extends cmd {
 				}
 			}
 		}
+	}
+
+	public function formatMessage($_msg = '' ) { 
+		if (file_exists( dirname(__FILE__) . '/../../../../data/php/user.function.class.php' )) {
+			require_once dirname(__FILE__) . '/../../../../data/php/user.function.class.php';
+		}
+
+		if (class_exists('userFunction') && method_exists('userFunction', 'customFormatTelegramMessage')) {
+			log::add('telegram', 'debug', 'la fonction \'customFormatTelegramMessage\' existe !');
+			return userFunction::customFormatTelegramMessage($_msg);
+		}
+		else{
+			log::add('telegram', 'debug', 'pas de customisation du message');
+			return $_msg ;
+		}  
 	}
 
 	/*     * **********************Getteur Setteur*************************** */
