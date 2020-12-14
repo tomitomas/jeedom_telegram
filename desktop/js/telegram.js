@@ -104,7 +104,7 @@ function addCmdToTable(_cmd) {
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="title"></span>';
         tr += '</td>';
         tr += '<td>';
-        if(_cmd.logicalId != 'alluser'){
+        if( ! notUser.includes( _cmd.logicalId ) ){
             tr += '<select class="form-control cmdAttr input-sm" data-l1key="configuration" data-l2key="user"></select>';
         }
         tr += '</td>';
