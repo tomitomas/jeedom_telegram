@@ -16,7 +16,6 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
-require_once dirname(__FILE__) . '/../../../../data/php/user.function.class.php';
 
 class telegram extends eqLogic {
 
@@ -325,6 +324,10 @@ class telegramCmd extends cmd {
 	}
 
 	public function formatMessage($_msg = '' ) { 
+		if (file_exists( dirname(__FILE__) . '/../../../../data/php/user.function.class.php' )) {
+			require_once dirname(__FILE__) . '/../../../../data/php/user.function.class.php';
+		}
+
 		if (class_exists('userFunction') && method_exists('userFunction', 'customFormatTelegramMessage')) {
 			log::add('telegram', 'debug', 'la fonction \'customFormatTelegramMessage\' existe !');
 			return userFunction::customFormatTelegramMessage($_msg);
