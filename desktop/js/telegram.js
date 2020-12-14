@@ -85,6 +85,7 @@ $(".li_eqLogic").on('click', function (event) {
 });
 
 function addCmdToTable(_cmd) {
+    const notUser = ['alluser','lastaskuser','lastuser'];
     if (!isset(_cmd)) {
         var _cmd = {configuration: {}};
     }
@@ -121,6 +122,11 @@ function addCmdToTable(_cmd) {
         tr += '<td>';
         tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="last_name"></span>';
         tr += '</td>';
+        tr += '<td>';
+        if( ! notUser.includes( _cmd.logicalId ) ){
+          tr += '<span class="cmdAttr" data-l1key="configuration" data-l2key="username"></span>';
+        }
+        tr += '</td>';
     } else {
         tr += '<td>';
         tr += '</td>';
@@ -129,6 +135,9 @@ function addCmdToTable(_cmd) {
         tr += '<td>';
         tr += '</td>';
         tr += '<td>';
+        tr += '</td>';
+        tr += '<td>';
+        tr += '</td>';
         tr += '</td>';
         tr += '<td>';
         tr += '</td>';

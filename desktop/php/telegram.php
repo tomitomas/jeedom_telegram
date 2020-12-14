@@ -170,6 +170,7 @@ foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
         <th>{{Localisation}}</th>
         <th>{{Prénom}}</th>
         <th>{{Nom}}</th>
+        <th>{{Telegram UserName}}</th>
         <th>{{Paramètres}}</th>
         <th>{{Options}}</th>
       </tr>
